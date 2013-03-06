@@ -16,6 +16,7 @@ class Photo:
     self.path = path
     metadata=pyexiv2.ImageMetadata(self.path)
     metadata.read()
+    print (dir(metadata))
     ims=metadata.previews
     if len (ims) > 0:
       self.thumb = ims[-1]
@@ -30,6 +31,24 @@ class Photo:
   #def preview(self):
 
 
+def main():
+  rootdir='tmp-source'
+  fileList = get_photo_list(rootdir)
+
+  for f in fileList:
+    print (f)
+    #f.preview()
+    print (f.thumb.mime_type)
+
+def split_by_date(fileList):
+  dateFileList={}
+  for photo in fileList:
+    if photo.date in dateFileList.keys():
+      dateFileList[photo.date].append(photo)
+    else:
+      dateFileList[photo.date]=[photo.date]
+  return dateFileList
+
 def get_photo_list(rootdir):
   fileList = []
   #rootdir = sys.argv[1]
@@ -42,16 +61,6 @@ def get_photo_list(rootdir):
         if mime == 'image':
           fileList.append(Photo(longfname))
   return fileList
-
-def main():
-  rootdir='tmp-source'
-  fileList = get_photo_list(rootdir)
-
-  for f in fileList:
-    print (f)
-    #f.preview()
-    print (f.thumb.mime_type)
-
 
 if __name__ == '__main__':
   main()
