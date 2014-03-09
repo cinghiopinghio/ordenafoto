@@ -11,14 +11,19 @@ if len(argv) < 2:
     exit('Please specify an image on the commandline.')
 
 # Note, these are equivalent:
-# metadata = GExiv2.Metadata()
-# metadata.open_path(argv[-1])
-metadata = GExiv2.Metadata(argv[-1])
+metadata = GExiv2.Metadata()
+metadata.open_path(argv[-1])
+# metadata = GExiv2.Metadata(argv[-1])
 
 # Currently, the Metadata class can be thought of as a dict mapping strings to strings.
 # Here are some examples of getting and setting strings from photo tags:
 
 tag = 'Exif.Image.Model'
+print (metadata)
+print (type(metadata))
+print (dir(metadata))
+f=metadata.get_focal_length()
+print(f)
 
 if tag in metadata:
     print('Your camera is a:', metadata[tag])
